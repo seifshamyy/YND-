@@ -41,9 +41,8 @@ export function CustomCursor() {
             interactables.forEach((el) => {
                 el.addEventListener('mouseenter', () => {
                     gsap.to(cursor, {
-                        scale: 3,
-                        backgroundColor: 'transparent',
-                        border: '1px solid currentColor',
+                        scale: 0.1,
+                        opacity: 0,
                         duration: 0.3,
                         ease: 'power3.out'
                     })
@@ -51,8 +50,7 @@ export function CustomCursor() {
                 el.addEventListener('mouseleave', () => {
                     gsap.to(cursor, {
                         scale: 1,
-                        backgroundColor: 'currentColor',
-                        border: 'none',
+                        opacity: 1,
                         duration: 0.3,
                         ease: 'power3.out'
                     })
@@ -82,7 +80,7 @@ export function CustomCursor() {
     return (
         <div
             ref={cursorRef}
-            className="fixed top-0 left-0 w-3 h-3 bg-foreground rounded-full pointer-events-none z-[100] transform -translate-x-1/2 -translate-y-1/2 hidden md:block mix-blend-difference"
+            className="fixed top-0 left-0 w-4 h-4 bg-white rounded-full pointer-events-none z-[100] transform -translate-x-1/2 -translate-y-1/2 hidden md:block mix-blend-difference"
         />
     )
 }
