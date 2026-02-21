@@ -8,7 +8,24 @@ export function Preloader() {
     const preloaderRef = useRef<HTMLDivElement>(null)
     const textRef = useRef<HTMLDivElement>(null)
 
+    // Hydration safe flag
+    const [isMounted, setIsMounted] = useState(false)
+
     useEffect(() => {
+        setIsMounted(true)
+    }, [])
+
+    useEffect(() => {
+        if (!isMounted) return
+
+        // Check if we've already shown the preloader this session
+        if (sessionStorage.getItem('hasSeenPreloader')) {
+            if (preloaderRef.current) {
+                preloaderRef.current.style.display = 'none'
+            }
+            return
+        }
+
         // Lock scroll while preloading
         document.body.style.overflow = 'hidden'
 
@@ -58,13 +75,16 @@ export function Preloader() {
                     if (preloaderRef.current) {
                         preloaderRef.current.style.display = 'none'
                     }
-                    // Unlock scroll
+                    // Unlock scroll and save state
                     document.body.style.overflow = ''
+                    sessionStorage.setItem('hasSeenPreloader', 'true')
                 }
             }, "-=0.2")
         }
 
-    }, [])
+    }, [isMounted])
+
+    if (!isMounted) return null
 
     return (
         <div

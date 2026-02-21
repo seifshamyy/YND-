@@ -3,11 +3,7 @@ import { Inter, Newsreader, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
-import { SmoothScroller } from '@/components/SmoothScroller'
-import { LenisScroll } from '@/components/LenisScroll'
-import { CustomCursor } from '@/components/CustomCursor'
-import { Preloader } from '@/components/Preloader'
-import { TransitionOverlay } from '@/components/TransitionOverlay'
+import { CustomUIWrapper } from '@/components/CustomUIWrapper'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -41,11 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${newsreader.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen bg-background text-foreground antialiased selection:bg-foreground selection:text-white">
-        <Preloader />
-        <TransitionOverlay />
-        <LenisScroll />
-        <CustomCursor />
-        <SmoothScroller />
+        <CustomUIWrapper />
         <Navbar />
         <main className="flex-grow pt-24 px-6 md:px-12 lg:px-24 max-w-[1600px] mx-auto w-full">
           {children}
