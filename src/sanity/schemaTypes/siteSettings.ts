@@ -24,6 +24,14 @@ export const siteSettingsSchema = {
             },
         },
         {
+            name: 'philosophyImage',
+            title: 'Philosophy section Parallax Image',
+            type: 'image',
+            options: {
+                hotspot: true,
+            },
+        },
+        {
             name: 'contactEmail',
             title: 'Contact Email',
             type: 'string',

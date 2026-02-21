@@ -4,15 +4,18 @@ import Image from 'next/image'
 import { urlForImage } from '@/sanity/lib/image'
 import { TypographyMatrix } from '@/components/TypographyMatrix'
 import { RevealImage } from '@/components/RevealImage'
+import { KineticMarquee } from '@/components/KineticMarquee'
+import { HoverImageReveal } from '@/components/HoverImageReveal'
 
 export const revalidate = 60
 
 export default async function Home() {
   const settings = await client.fetch(`*[_type == "siteSettings"][0] {
     homepageStatement,
-    heroImage
+    heroImage,
+    philosophyImage
   }`)
-  const projects = await client.fetch(`*[_type == "project"] | order(year desc)[0...2] {
+  const projects = await client.fetch(`*[_type == "project"] | order(year desc)[0...4] {
     slug,
     title,
     location,
@@ -61,15 +64,17 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Manifesto Teaser */}
-      <section className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-6 py-16 border-t border-foreground/10 fade-up">
-        <div className="md:col-span-4">
+      {/* Kinetic Marquee */}
+      <KineticMarquee text="ARCHITECTURE • INTERIORS • EXECUTION • MATERIALITY •" speed={25} />
+
+      {/* Philosophy Parallax Teaser */}
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 py-32 border-b border-foreground/10">
+        <div className="flex flex-col gap-12 lg:sticky lg:top-32 h-fit max-w-xl">
           <h2 className="font-heading text-lg font-medium text-foreground tracking-tight">Our Position</h2>
-        </div>
-        <div className="md:col-span-8 flex flex-col gap-8 max-w-2xl">
-          <p className="font-body text-xl md:text-2xl lg:text-3xl leading-snug text-foreground">
+          <p className="font-body text-2xl md:text-3xl lg:text-4xl leading-snug text-foreground">
             YND+ is not interested in style. Style is the residue of decisions, not the objective.
             We work within reality. Climate, economy, labor, material supply, construction logic.
+            <br /><br />
             These are not constraints — they are the project.
           </p>
           <div>
@@ -78,81 +83,96 @@ export default async function Home() {
             </Link>
           </div>
         </div>
+
+        <div className="w-full aspect-[3/4] lg:aspect-[4/5] relative overflow-hidden bg-accent/5">
+          {settings?.philosophyImage ? (
+            <Image
+              src={urlForImage(settings.philosophyImage)?.url() as string}
+              alt="Philosophy"
+              fill
+              className="object-cover grayscale"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center font-mono text-sm tracking-widest uppercase text-accent/50">
+              Philosophy Parallax Image
+            </div>
+          )}
+        </div>
       </section>
 
-      {/* Featured Projects */}
-      <section className="flex flex-col gap-16 py-16 border-t border-foreground/10 fade-up">
+      {/* Interactive Expertise Hover Accordion */}
+      <HoverImageReveal />
+
+      {/* Featured Projects Gallery */}
+      <section className="flex flex-col gap-24 py-16">
         <div className="flex justify-between items-end">
-          <h2 className="font-heading text-lg font-medium tracking-tight">Selected Work</h2>
-          <Link href="/projects" className="text-sm text-accent hover:text-foreground transition-colors">
-            All projects
+          <h2 className="font-heading text-3xl md:text-5xl font-medium tracking-tight">Selected Work</h2>
+          <Link href="/projects" className="text-sm border-b border-foreground pb-1 hover:opacity-70 transition-opacity uppercase tracking-widest font-mono text-accent">
+            View All Projects
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-16 gap-y-24 md:gap-y-32">
           {projects?.length > 0 ? (
-            projects.map((project: any, i: number) => (
-              <Link key={project.slug.current} href={`/projects/${project.slug.current}`} className={`group flex flex-col gap-4 ${i === 1 ? 'md:mt-24' : ''}`}>
-                <RevealImage className="w-full bg-transparent transition-colors duration-500" staggerIndex={i}>
-                  <div className="w-full flex items-center justify-center transition-transform duration-1000 ease-out group-hover:scale-[1.03]">
-                    {project.heroImage ? (
-                      <Image
-                        src={urlForImage(project.heroImage)?.url() as string}
-                        alt={project.title}
-                        width={project.heroImage.asset?.metadata?.dimensions?.width || 1200}
-                        height={project.heroImage.asset?.metadata?.dimensions?.height || 1200}
-                        className="w-full h-auto object-contain"
-                      />
-                    ) : (
-                      <div className="w-full aspect-[4/5] flex items-center justify-center font-mono text-xs text-accent/50">Thumbnail Placeholder</div>
-                    )}
+            projects.map((project: any, i: number) => {
+              // Asymmetrical staggering based on odd/even index
+              const alignClass = i % 2 !== 0 ? 'md:mt-32' : ''
+              const sizeClass = i % 2 === 0 ? 'aspect-[4/5]' : 'aspect-square md:aspect-[3/4] md:w-5/6 md:ml-auto'
+
+              return (
+                <Link key={project.slug.current} href={`/projects/${project.slug.current}`} className={`group flex flex-col gap-6 ${alignClass}`}>
+                  <RevealImage className={`w-full bg-transparent transition-colors duration-500 ${sizeClass}`} staggerIndex={i}>
+                    <div className="w-full h-full flex items-center justify-center transition-transform duration-1000 ease-out group-hover:scale-[1.03] overflow-hidden">
+                      {project.heroImage ? (
+                        <Image
+                          src={urlForImage(project.heroImage)?.url() as string}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-accent/5 flex items-center justify-center font-mono text-xs text-accent/50">Thumbnail Placeholder</div>
+                      )}
+                    </div>
+                  </RevealImage>
+                  <div className="flex justify-between items-start pt-2">
+                    <div>
+                      <h3 className="font-heading text-2xl text-foreground tracking-tight font-medium mb-1">{project.title}</h3>
+                      <p className="font-body text-accent text-lg">{project.location}</p>
+                    </div>
+                    <span className="font-mono text-sm text-accent mix-blend-difference">{project.year}</span>
                   </div>
-                </RevealImage>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-heading text-lg text-foreground tracking-tight font-medium">{project.title}</h3>
-                    <p className="font-body text-accent">{project.location}</p>
-                  </div>
-                  <span className="font-mono text-xs text-accent">{project.year}</span>
-                </div>
-              </Link>
-            ))
+                </Link>
+              )
+            })
           ) : (
             <>
-              {/* Fallback Project 1 */}
-              <Link href="/projects/project-one" className="group flex flex-col gap-4">
+              {/* Fallback Block 1 */}
+              <Link href="/projects/project-one" className="group flex flex-col gap-6">
                 <div className="w-full aspect-[4/5] bg-foreground/5 relative overflow-hidden">
-                  <div className="absolute inset-0 w-full h-full bg-accent/5 transition-transform duration-700 ease-out group-hover:scale-[1.02]">
-                    <div className="w-full h-full flex items-center justify-center font-mono text-xs text-accent/50">Thumbnail Placeholder</div>
-                  </div>
-                </div>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-heading text-lg text-foreground tracking-tight font-medium">Project One</h3>
-                    <p className="font-body text-accent">Residential, Concrete</p>
-                  </div>
-                  <span className="font-mono text-xs text-accent">2024</span>
+                  <div className="w-full h-full flex items-center justify-center font-mono text-xs text-accent/50 transition-transform duration-1000 ease-out group-hover:scale-[1.03]">Placeholder 1</div>
                 </div>
               </Link>
-              {/* Fallback Project 2 */}
-              <Link href="/projects/project-two" className="group flex flex-col gap-4 md:mt-24">
-                <div className="w-full aspect-[4/5] bg-foreground/5 relative overflow-hidden">
-                  <div className="absolute inset-0 w-full h-full bg-accent/5 transition-transform duration-700 ease-out group-hover:scale-[1.02]">
-                    <div className="w-full h-full flex items-center justify-center font-mono text-xs text-accent/50">Thumbnail Placeholder</div>
-                  </div>
-                </div>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-heading text-lg text-foreground tracking-tight font-medium">Project Two</h3>
-                    <p className="font-body text-accent">Commercial, Steel</p>
-                  </div>
-                  <span className="font-mono text-xs text-accent">2023</span>
+              {/* Fallback Block 2 */}
+              <Link href="/projects/project-two" className="group flex flex-col gap-6 md:mt-32 md:w-5/6 md:ml-auto">
+                <div className="w-full aspect-[3/4] bg-foreground/5 relative overflow-hidden">
+                  <div className="w-full h-full flex items-center justify-center font-mono text-xs text-accent/50 transition-transform duration-1000 ease-out group-hover:scale-[1.03]">Placeholder 2</div>
                 </div>
               </Link>
             </>
           )}
         </div>
       </section>
+
+      {/* Massive CTA Pre-Footer */}
+      <section className="min-h-[70vh] flex items-center justify-center border-t border-foreground/10 py-32 px-4 group">
+        <Link href="/contact" className="transition-transform duration-700 ease-out group-hover:scale-[1.02]">
+          <h2 className="font-heading text-6xl sm:text-8xl md:text-[8rem] lg:text-[11rem] font-medium tracking-tighter text-foreground uppercase leading-none text-center">
+            Let's<br />Talk.
+          </h2>
+        </Link>
+      </section>
     </div>
   )
 }
+
