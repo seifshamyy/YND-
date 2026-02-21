@@ -33,10 +33,3 @@
   opacity: 0;
   transform: translateY(10px);
 }
-
-/* Hide default cursor on desktop & let CustomCursor take over */
-@media (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
-}

@@ -17,6 +17,14 @@ export function CustomUIWrapper() {
 
     return (
         <>
+            <style dangerouslySetInnerHTML={{
+                __html: `
+                @media (pointer: fine) {
+                    * {
+                        cursor: none !important;
+                    }
+                }
+            `}} />
             <Preloader />
             <TransitionOverlay />
             <LenisScroll />
