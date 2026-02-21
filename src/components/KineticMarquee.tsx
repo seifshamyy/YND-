@@ -16,7 +16,7 @@ export function KineticMarquee({ text, speed = 20, className = '' }: KineticMarq
     return (
         <div className={`relative flex overflow-hidden whitespace-nowrap w-[100vw] left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-foreground text-background py-8 md:py-12 border-y border-background/20 select-none ${className}`}>
             <div
-                className="flex items-center gap-12 sm:gap-16 lg:gap-24 uppercase font-heading font-medium tracking-tight text-4xl sm:text-6xl lg:text-8xl"
+                className="flex items-center gap-8 sm:gap-12 lg:gap-16 font-heading font-medium tracking-tight text-4xl sm:text-6xl lg:text-8xl will-change-transform transform-gpu"
                 style={{
                     animation: `marquee ${speed}s linear infinite`,
                     width: 'max-content'

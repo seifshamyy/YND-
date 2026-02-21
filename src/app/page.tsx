@@ -13,7 +13,11 @@ export default async function Home() {
   const settings = await client.fetch(`*[_type == "siteSettings"][0] {
     homepageStatement,
     heroImage,
-    philosophyImage
+    philosophyImage,
+    expertiseList[] {
+      title,
+      image
+    }
   }`)
   const projects = await client.fetch(`*[_type == "project"] | order(year desc)[0...4] {
     slug,
@@ -65,7 +69,7 @@ export default async function Home() {
       </section>
 
       {/* Kinetic Marquee */}
-      <KineticMarquee text="ARCHITECTURE • INTERIORS • EXECUTION • MATERIALITY •" speed={25} />
+      <KineticMarquee text="Architecture • Interiors • Execution • Materiality •" speed={25} />
 
       {/* Philosophy Parallax Teaser */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 py-32 border-b border-foreground/10">
@@ -101,7 +105,7 @@ export default async function Home() {
       </section>
 
       {/* Interactive Expertise Hover Accordion */}
-      <HoverImageReveal />
+      <HoverImageReveal expertiseList={settings?.expertiseList} />
 
       {/* Featured Projects Gallery */}
       <section className="flex flex-col gap-24 py-16">
@@ -165,10 +169,10 @@ export default async function Home() {
       </section>
 
       {/* Massive CTA Pre-Footer */}
-      <section className="min-h-[70vh] flex items-center justify-center border-t border-foreground/10 py-32 px-4 group">
+      <section className="min-h-[50vh] flex items-center justify-center border-t border-foreground/10 py-32 px-4 group">
         <Link href="/contact" className="transition-transform duration-700 ease-out group-hover:scale-[1.02]">
-          <h2 className="font-heading text-6xl sm:text-8xl md:text-[8rem] lg:text-[11rem] font-medium tracking-tighter text-foreground uppercase leading-none text-center">
-            Let's<br />Talk.
+          <h2 className="font-heading text-4xl sm:text-6xl md:text-8xl lg:text-[7rem] font-medium tracking-tight text-foreground text-center">
+            Let's Talk.
           </h2>
         </Link>
       </section>

@@ -32,6 +32,21 @@ export const siteSettingsSchema = {
             },
         },
         {
+            name: 'expertiseList',
+            title: 'Expertise List',
+            description: 'List of expertise areas and their background images.',
+            type: 'array',
+            of: [
+                {
+                    type: 'object',
+                    fields: [
+                        { name: 'title', title: 'Title', type: 'string' },
+                        { name: 'image', title: 'Background Image', type: 'image', options: { hotspot: true } }
+                    ]
+                }
+            ]
+        },
+        {
             name: 'contactEmail',
             title: 'Contact Email',
             type: 'string',
