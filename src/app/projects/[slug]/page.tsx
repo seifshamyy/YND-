@@ -2,6 +2,7 @@ import { client } from '@/sanity/lib/client'
 import Image from 'next/image'
 import { urlForImage } from '@/sanity/lib/image'
 import { notFound } from 'next/navigation'
+import { RevealImage } from '@/components/RevealImage'
 
 export const revalidate = 60
 
@@ -106,15 +107,17 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
             {/* Hero Image */}
             {project.heroImage && (
-                <section className="w-full bg-transparent relative flex items-center justify-center overflow-hidden group">
-                    <Image
-                        src={urlForImage(project.heroImage)?.url() as string}
-                        alt={`Hero image for ${project.title}`}
-                        width={project.heroImage.asset?.metadata?.dimensions?.width || 1920}
-                        height={project.heroImage.asset?.metadata?.dimensions?.height || 1080}
-                        priority
-                        className="w-full h-auto max-h-[85vh] object-contain shadow-sm"
-                    />
+                <section className="w-full relative flex items-center justify-center overflow-hidden group">
+                    <RevealImage className="w-full bg-transparent" parallax={true} parallaxSpeed={10}>
+                        <Image
+                            src={urlForImage(project.heroImage)?.url() as string}
+                            alt={`Hero image for ${project.title}`}
+                            width={project.heroImage.asset?.metadata?.dimensions?.width || 1920}
+                            height={project.heroImage.asset?.metadata?.dimensions?.height || 1080}
+                            priority
+                            className="w-full h-auto max-h-[85vh] object-contain shadow-sm"
+                        />
+                    </RevealImage>
                     {project.heroImage.tag && (
                         <div className="absolute bottom-6 left-6 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out z-10">
                             <span className="font-mono text-xs uppercase tracking-widest bg-background/90 text-foreground px-3 py-1.5 backdrop-blur-sm shadow-sm">
@@ -129,14 +132,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {project.contextImages && project.contextImages.length > 0 && (
                 <section className="grid grid-cols-1 md:grid-cols-2 gap-6 relative items-start">
                     {project.contextImages.map((img: any, i: number) => (
-                        <div key={i} className={`w-full bg-transparent relative flex items-center justify-center overflow-hidden group ${i % 2 !== 0 ? 'md:mt-32' : ''}`}>
-                            <Image
-                                src={urlForImage(img)?.url() as string}
-                                alt={`Context image ${i + 1} for ${project.title}`}
-                                width={img.asset?.metadata?.dimensions?.width || 1200}
-                                height={img.asset?.metadata?.dimensions?.height || 1200}
-                                className="w-full h-auto max-h-[85vh] object-contain shadow-sm"
-                            />
+                        <div key={i} className={`w-full relative flex items-center justify-center overflow-hidden group ${i % 2 !== 0 ? 'md:mt-32' : ''}`}>
+                            <RevealImage className="w-full bg-transparent" staggerIndex={i}>
+                                <Image
+                                    src={urlForImage(img)?.url() as string}
+                                    alt={`Context image ${i + 1} for ${project.title}`}
+                                    width={img.asset?.metadata?.dimensions?.width || 1200}
+                                    height={img.asset?.metadata?.dimensions?.height || 1200}
+                                    className="w-full h-auto max-h-[85vh] object-contain shadow-sm"
+                                />
+                            </RevealImage>
                             {img.tag && (
                                 <div className="absolute bottom-6 left-6 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out z-10">
                                     <span className="font-mono text-xs uppercase tracking-widest bg-background/90 text-foreground px-3 py-1.5 backdrop-blur-sm shadow-sm">
@@ -153,14 +158,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             {project.detailImages && project.detailImages.length > 0 && (
                 <section className="flex flex-col gap-12">
                     {project.detailImages.map((img: any, i: number) => (
-                        <div key={i} className="w-full bg-transparent relative flex items-center justify-center overflow-hidden group">
-                            <Image
-                                src={urlForImage(img)?.url() as string}
-                                alt={`Detail image ${i + 1} for ${project.title}`}
-                                width={img.asset?.metadata?.dimensions?.width || 1920}
-                                height={img.asset?.metadata?.dimensions?.height || 1080}
-                                className="w-full h-auto max-h-[85vh] object-contain shadow-sm"
-                            />
+                        <div key={i} className="w-full relative flex items-center justify-center overflow-hidden group">
+                            <RevealImage className="w-full bg-transparent" parallax={true} parallaxSpeed={-5}>
+                                <Image
+                                    src={urlForImage(img)?.url() as string}
+                                    alt={`Detail image ${i + 1} for ${project.title}`}
+                                    width={img.asset?.metadata?.dimensions?.width || 1920}
+                                    height={img.asset?.metadata?.dimensions?.height || 1080}
+                                    className="w-full h-auto max-h-[85vh] object-contain shadow-sm"
+                                />
+                            </RevealImage>
                             {img.tag && (
                                 <div className="absolute bottom-6 left-6 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 ease-out z-10">
                                     <span className="font-mono text-xs uppercase tracking-widest bg-background/90 text-foreground px-3 py-1.5 backdrop-blur-sm shadow-sm">

@@ -2,6 +2,8 @@ import { client } from '@/sanity/lib/client'
 import Link from 'next/link'
 import Image from 'next/image'
 import { urlForImage } from '@/sanity/lib/image'
+import { TypographyMatrix } from '@/components/TypographyMatrix'
+import { RevealImage } from '@/components/RevealImage'
 
 export const revalidate = 60
 
@@ -30,8 +32,8 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-32">
       {/* Hero Section */}
-      <section className="flex flex-col gap-12 pt-16 min-h-[85vh] justify-center fade-up">
-        <div className="w-full bg-transparent relative flex items-center justify-center overflow-hidden group">
+      <section className="flex flex-col gap-12 pt-16 min-h-[85vh] justify-center">
+        <RevealImage className="w-full bg-transparent flex items-center justify-center group" delay={2.6} parallax={true} parallaxSpeed={15}>
           {settings?.heroImage ? (
             <Image
               src={urlForImage(settings.heroImage)?.url() as string}
@@ -39,19 +41,21 @@ export default async function Home() {
               width={1920}
               height={1080}
               priority
-              className="w-full h-auto max-h-[85vh] object-contain transition-transform duration-700 ease-out group-hover:scale-[1.01]"
+              className="w-full h-auto max-h-[85vh] object-contain"
             />
           ) : (
             <div className="w-full aspect-video bg-accent/5 flex items-center justify-center">
               <span className="font-mono text-accent/50 text-sm tracking-widest uppercase">Hero Image Placeholder</span>
             </div>
           )}
-        </div>
+        </RevealImage>
 
         <div className="max-w-4xl">
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading tracking-tight leading-tight text-foreground font-medium">
-            {statement}
-          </h1>
+          <TypographyMatrix
+            text={statement}
+            className="text-4xl md:text-5xl lg:text-7xl font-heading tracking-tight leading-tight text-foreground font-medium"
+            delay={2.6} // Wait for preloader to finish (2s count + 0.6s exit)
+          />
         </div>
       </section>
 
@@ -87,8 +91,8 @@ export default async function Home() {
           {projects?.length > 0 ? (
             projects.map((project: any, i: number) => (
               <Link key={project.slug.current} href={`/projects/${project.slug.current}`} className={`group flex flex-col gap-4 ${i === 1 ? 'md:mt-24' : ''}`}>
-                <div className="w-full bg-transparent relative overflow-hidden transition-colors duration-500">
-                  <div className="w-full relative flex items-center justify-center transition-transform duration-700 ease-out group-hover:scale-[1.02]">
+                <RevealImage className="w-full bg-transparent transition-colors duration-500" staggerIndex={i}>
+                  <div className="w-full flex items-center justify-center transition-transform duration-1000 ease-out group-hover:scale-[1.03]">
                     {project.heroImage ? (
                       <Image
                         src={urlForImage(project.heroImage)?.url() as string}
@@ -101,7 +105,7 @@ export default async function Home() {
                       <div className="w-full aspect-[4/5] flex items-center justify-center font-mono text-xs text-accent/50">Thumbnail Placeholder</div>
                     )}
                   </div>
-                </div>
+                </RevealImage>
                 <div className="flex justify-between items-start">
                   <div>
                     <h3 className="font-heading text-lg text-foreground tracking-tight font-medium">{project.title}</h3>
