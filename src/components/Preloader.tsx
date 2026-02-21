@@ -81,10 +81,7 @@ export function Preloader() {
                 }
             }, "-=0.2")
         }
-
-    }, [isMounted])
-
-    if (!isMounted) return null
+    }, [])
 
     return (
         <div
