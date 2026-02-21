@@ -11,7 +11,7 @@ export function CustomUIWrapper() {
     const pathname = usePathname()
 
     // If we are anywhere inside the Sanity admin studio, do not render ANY custom global UI
-    if (pathname?.startsWith('/studio')) {
+    if (pathname?.startsWith('/admin')) {
         return null
     }
 

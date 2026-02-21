@@ -42,7 +42,7 @@ export function CustomCursor() {
         // Smooth follow logic using GSAP ticker
         const renderCursor = () => {
             // Disable cursor rendering on sanity admin pages
-            if (window.location.pathname.startsWith('/studio')) {
+            if (window.location.pathname.startsWith('/admin')) {
                 cursor.style.display = 'none'
                 return
             } else {
@@ -95,7 +95,7 @@ export function CustomCursor() {
         }
     }, [isMounted]) // We do NOT put pathname here, so it doesn't reset/re-run on navigation!
 
-    if (!isMounted || pathname?.startsWith('/studio')) return null
+    if (!isMounted || pathname?.startsWith('/admin')) return null
 
     return (
         <div

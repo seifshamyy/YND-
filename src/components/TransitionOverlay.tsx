@@ -13,7 +13,7 @@ export function TransitionOverlay() {
     }, [])
 
     useEffect(() => {
-        if (!isMounted || pathname?.startsWith('/studio')) return
+        if (!isMounted || pathname?.startsWith('/admin')) return
 
         const overlay = document.getElementById('page-transition-overlay')
         if (overlay) {
@@ -32,7 +32,7 @@ export function TransitionOverlay() {
         }
     }, [pathname, isMounted])
 
-    if (pathname?.startsWith('/studio')) return null
+    if (pathname?.startsWith('/admin')) return null
 
     return (
         <div
