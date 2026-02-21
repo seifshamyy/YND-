@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { urlForImage } from '@/sanity/lib/image'
 import { TypographyMatrix } from '@/components/TypographyMatrix'
 import { RevealImage } from '@/components/RevealImage'
-import { KineticMarquee } from '@/components/KineticMarquee'
+import { ClientLogos } from '@/components/ClientLogos'
 import { HoverImageReveal } from '@/components/HoverImageReveal'
 
 export const revalidate = 60
@@ -17,6 +17,10 @@ export default async function Home() {
     expertiseList[] {
       title,
       image
+    },
+    clientList[] {
+      name,
+      style
     }
   }`)
   const projects = await client.fetch(`*[_type == "project"] | order(year desc)[0...4] {
@@ -55,7 +59,7 @@ export default async function Home() {
             </div>
           )}
           {/* Contrast Gradient Overlay (Inside mask to sync with reveal) */}
-          <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-black/80 via-black/20 to-transparent z-[5] pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-[80%] bg-gradient-to-t from-black via-black/90 to-transparent z-[5] pointer-events-none" />
         </RevealImage>
 
         {/* Typography Overlay */}
@@ -68,8 +72,8 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Kinetic Marquee */}
-      <KineticMarquee text="Architecture • Interiors • Execution • Materiality •" speed={25} />
+      {/* Stunning Fake Clients Section */}
+      <ClientLogos clientList={settings?.clientList} />
 
       {/* Philosophy Parallax Teaser */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 py-32 border-b border-foreground/10">

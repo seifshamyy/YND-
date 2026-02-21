@@ -47,6 +47,27 @@ export const siteSettingsSchema = {
             ]
         },
         {
+            name: 'clientList',
+            title: 'Selected Clients & Partners',
+            description: 'List of client names and their typographic styles for the marquee.',
+            type: 'array',
+            of: [
+                {
+                    type: 'object',
+                    fields: [
+                        { name: 'name', title: 'Client Name', type: 'string' },
+                        {
+                            name: 'style',
+                            title: 'Tailwind Typographic Classes',
+                            type: 'string',
+                            description: 'E.g., "font-heading font-light tracking-widest uppercase" or "font-body italic".',
+                            initialValue: 'font-heading font-medium tracking-tight'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             name: 'contactEmail',
             title: 'Contact Email',
             type: 'string',
