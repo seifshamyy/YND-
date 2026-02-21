@@ -61,8 +61,8 @@ export function CustomCursor() {
         // Delay setup to allow Next.js to mount elements
         const timer = setTimeout(handleHover, 500)
 
-        // Reset scale on route change just in case the mouse left the screen while unmounting
-        gsap.to(cursor, { scale: 1, backgroundColor: 'currentColor', border: 'none', duration: 0.1 })
+        // Reset scale and opacity on route change just in case the mouse clicked a link to navigate
+        gsap.to(cursor, { scale: 1, opacity: 1, duration: 0.1 })
 
         // Check if device is touch, we hide the custom cursor completely
         const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
@@ -80,7 +80,7 @@ export function CustomCursor() {
     return (
         <div
             ref={cursorRef}
-            className="fixed top-0 left-0 w-4 h-4 bg-white rounded-full pointer-events-none z-[100] transform -translate-x-1/2 -translate-y-1/2 hidden md:block mix-blend-difference"
+            className="fixed top-0 left-0 w-5 h-5 rounded-full pointer-events-none z-[100] transform -translate-x-1/2 -translate-y-1/2 hidden md:block backdrop-invert backdrop-grayscale border border-white/20"
         />
     )
 }
