@@ -6,19 +6,18 @@ import { usePathname } from 'next/navigation'
 
 export function CustomCursor() {
     const cursorRef = useRef<HTMLDivElement>(null)
+    const mouseX = useRef(window.innerWidth / 2)
+    const mouseY = useRef(window.innerHeight / 2)
     const pathname = usePathname()
 
     useEffect(() => {
         const cursor = cursorRef.current
         if (!cursor) return
 
-        let mouseX = window.innerWidth / 2
-        let mouseY = window.innerHeight / 2
-
         // Base mouse movement
         const onMouseMove = (e: MouseEvent) => {
-            mouseX = e.clientX
-            mouseY = e.clientY
+            mouseX.current = e.clientX
+            mouseY.current = e.clientY
         }
 
         window.addEventListener('mousemove', onMouseMove)
@@ -27,8 +26,8 @@ export function CustomCursor() {
         // This makes the cursor extremely buttery
         const renderCursor = () => {
             gsap.to(cursor, {
-                x: mouseX,
-                y: mouseY,
+                x: mouseX.current,
+                y: mouseY.current,
                 duration: 0.15,
                 ease: 'power2.out',
             })
