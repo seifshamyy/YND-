@@ -47,10 +47,9 @@ export default async function Home() {
               <span className="font-mono text-accent/50 text-sm tracking-widest uppercase">Hero Image Placeholder</span>
             </div>
           )}
+          {/* Contrast Gradient Overlay (Inside mask to sync with reveal) */}
+          <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-black/80 via-black/20 to-transparent z-[5] pointer-events-none" />
         </RevealImage>
-
-        {/* Contrast Gradient Overlay */}
-        <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-black/80 via-black/20 to-transparent z-[5] pointer-events-none" />
 
         {/* Typography Overlay */}
         <div className="absolute bottom-12 left-6 md:left-12 lg:left-24 z-10 max-w-4xl text-white pointer-events-none pr-6 drop-shadow-md">
