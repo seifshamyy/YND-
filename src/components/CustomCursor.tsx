@@ -50,7 +50,7 @@ export function CustomCursor() {
                 el.addEventListener('mouseleave', () => {
                     gsap.to(cursor, {
                         scale: 1,
-                        opacity: 1,
+                        opacity: 0.8,
                         duration: 0.3,
                         ease: 'power3.out'
                     })
@@ -62,7 +62,7 @@ export function CustomCursor() {
         const timer = setTimeout(handleHover, 500)
 
         // Reset scale and opacity on route change just in case the mouse clicked a link to navigate
-        gsap.to(cursor, { scale: 1, opacity: 1, duration: 0.1 })
+        gsap.to(cursor, { scale: 1, opacity: 0.8, duration: 0.1 })
 
         // Check if device is touch, we hide the custom cursor completely
         const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
@@ -81,6 +81,7 @@ export function CustomCursor() {
         <div
             ref={cursorRef}
             className="fixed top-0 left-0 w-5 h-5 rounded-full pointer-events-none z-[100] transform -translate-x-1/2 -translate-y-1/2 hidden md:block backdrop-invert backdrop-grayscale border border-white/20"
+            style={{ opacity: 0.8 }}
         />
     )
 }
