@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { TransitionLink as Link } from '@/components/TransitionLink'
 import { usePathname } from 'next/navigation'
 
 export function Navbar() {

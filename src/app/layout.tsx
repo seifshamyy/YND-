@@ -7,6 +7,7 @@ import { SmoothScroller } from '@/components/SmoothScroller'
 import { LenisScroll } from '@/components/LenisScroll'
 import { CustomCursor } from '@/components/CustomCursor'
 import { Preloader } from '@/components/Preloader'
+import { TransitionOverlay } from '@/components/TransitionOverlay'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -41,6 +42,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${newsreader.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen bg-background text-foreground antialiased selection:bg-foreground selection:text-white">
         <Preloader />
+        <TransitionOverlay />
         <LenisScroll />
         <CustomCursor />
         <SmoothScroller />

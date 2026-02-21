@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { TransitionLink as Link } from '@/components/TransitionLink'
 import { client } from '@/sanity/lib/client'
 
 export const revalidate = 60 // revalidate every minute

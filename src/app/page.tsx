@@ -1,5 +1,5 @@
 import { client } from '@/sanity/lib/client'
-import Link from 'next/link'
+import { TransitionLink as Link } from '@/components/TransitionLink'
 import Image from 'next/image'
 import { urlForImage } from '@/sanity/lib/image'
 import { TypographyMatrix } from '@/components/TypographyMatrix'
