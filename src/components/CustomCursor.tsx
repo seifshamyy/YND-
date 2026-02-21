@@ -6,13 +6,22 @@ import { usePathname } from 'next/navigation'
 
 export function CustomCursor() {
     const cursorRef = useRef<HTMLDivElement>(null)
-    const mouseX = useRef(window.innerWidth / 2)
-    const mouseY = useRef(window.innerHeight / 2)
+    const mouseX = useRef(0)
+    const mouseY = useRef(0)
     const pathname = usePathname()
 
     useEffect(() => {
         const cursor = cursorRef.current
         if (!cursor) return
+
+        // Disable custom cursor entirely on the Sanity Studio admin page
+        if (pathname?.startsWith('/studio')) {
+            cursor.style.display = 'none'
+            return
+        }
+
+        mouseX.current = window.innerWidth / 2
+        mouseY.current = window.innerHeight / 2
 
         // Base mouse movement
         const onMouseMove = (e: MouseEvent) => {
@@ -79,7 +88,7 @@ export function CustomCursor() {
     return (
         <div
             ref={cursorRef}
-            className="fixed top-0 left-0 w-5 h-5 rounded-full pointer-events-none z-[100] transform -translate-x-1/2 -translate-y-1/2 hidden md:block backdrop-invert backdrop-grayscale border border-white/20"
+            className={`fixed top-0 left-0 w-5 h-5 rounded-full pointer-events-none z-[100] transform -translate-x-1/2 -translate-y-1/2 hidden md:block backdrop-invert backdrop-grayscale border border-white/20 ${pathname?.startsWith('/studio') ? '!hidden' : ''}`}
             style={{ opacity: 0.65 }}
         />
     )

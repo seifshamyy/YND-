@@ -13,7 +13,7 @@ export function TransitionOverlay() {
     }, [])
 
     useEffect(() => {
-        if (!isMounted) return
+        if (!isMounted || pathname?.startsWith('/studio')) return
 
         const overlay = document.getElementById('page-transition-overlay')
         if (overlay) {
@@ -31,6 +31,8 @@ export function TransitionOverlay() {
             })
         }
     }, [pathname, isMounted])
+
+    if (pathname?.startsWith('/studio')) return null
 
     return (
         <div
