@@ -49,11 +49,14 @@ export default async function Home() {
           )}
         </RevealImage>
 
+        {/* Contrast Gradient Overlay */}
+        <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-black/80 via-black/20 to-transparent z-[5] pointer-events-none" />
+
         {/* Typography Overlay */}
-        <div className="absolute bottom-12 left-6 md:left-12 lg:left-24 z-10 max-w-4xl mix-blend-difference text-white pointer-events-none pr-6">
+        <div className="absolute bottom-12 left-6 md:left-12 lg:left-24 z-10 max-w-4xl text-white pointer-events-none pr-6 drop-shadow-md">
           <TypographyMatrix
             text={statement}
-            className="text-4xl md:text-6xl lg:text-[5.5rem] font-heading tracking-tight leading-[1.05] font-medium"
+            className="text-3xl md:text-5xl lg:text-[4.5rem] font-heading tracking-tight leading-[1.1] font-medium"
             delay={2.6} // Wait for preloader to finish (2s count + 0.6s exit)
           />
         </div>
