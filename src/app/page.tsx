@@ -32,28 +32,28 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-32">
       {/* Hero Section */}
-      <section className="flex flex-col gap-12 pt-16 min-h-[85vh] justify-center">
-        <RevealImage className="w-full bg-transparent flex items-center justify-center group" delay={2.6} parallax={true} parallaxSpeed={15}>
+      <section className="relative w-[100vw] left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] h-[90vh] min-h-[600px] -mt-24 mb-16 overflow-hidden bg-background">
+        <RevealImage className="absolute inset-0 w-full h-full z-0 group" delay={2.6} parallax={true} parallaxSpeed={15}>
           {settings?.heroImage ? (
             <Image
               src={urlForImage(settings.heroImage)?.url() as string}
               alt="YND+ Studio Architecture"
-              width={1920}
-              height={1080}
+              fill
               priority
-              className="w-full h-auto max-h-[85vh] object-contain"
+              className="object-cover"
             />
           ) : (
-            <div className="w-full aspect-video bg-accent/5 flex items-center justify-center">
+            <div className="w-full h-full bg-accent/10 flex items-center justify-center">
               <span className="font-mono text-accent/50 text-sm tracking-widest uppercase">Hero Image Placeholder</span>
             </div>
           )}
         </RevealImage>
 
-        <div className="max-w-4xl">
+        {/* Typography Overlay */}
+        <div className="absolute bottom-12 left-6 md:left-12 lg:left-24 z-10 max-w-4xl mix-blend-difference text-white pointer-events-none pr-6">
           <TypographyMatrix
             text={statement}
-            className="text-4xl md:text-5xl lg:text-7xl font-heading tracking-tight leading-tight text-foreground font-medium"
+            className="text-4xl md:text-6xl lg:text-[5.5rem] font-heading tracking-tight leading-[1.05] font-medium"
             delay={2.6} // Wait for preloader to finish (2s count + 0.6s exit)
           />
         </div>
