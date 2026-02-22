@@ -40,9 +40,14 @@ export function Navbar() {
                     {/* Brand */}
                     <Link
                         href="/"
-                        className={`font-heading font-medium tracking-tight text-lg transition-colors duration-300 z-[60] ${isOpen ? 'text-background' : 'text-foreground hover:opacity-70'}`}
+                        className="font-heading font-medium tracking-tight text-lg z-[60] flex items-center"
                     >
-                        YND+
+                        <span className={`transition-all duration-[800ms] ease-[cubic-bezier(0.76,0,0.24,1)] ${isOpen ? 'text-background translate-x-[calc(100vw-108px)] md:translate-x-0' : 'text-foreground hover:opacity-70'}`}>
+                            YND
+                        </span>
+                        <span className={`transition-all ease-[cubic-bezier(0.76,0,0.24,1)] ${isOpen ? 'opacity-0 md:opacity-100 text-background duration-100 delay-0' : 'opacity-100 text-foreground duration-300 delay-[500ms]'}`}>
+                            +
+                        </span>
                     </Link>
 
                     {/* Desktop Navigation */}
@@ -64,14 +69,13 @@ export function Navbar() {
 
                     {/* Mobile menu toggle */}
                     <button
-                        className={`md:hidden z-[60] p-2 -mr-2 transition-colors duration-300 ${isOpen ? 'text-background' : 'text-foreground'}`}
+                        className={`md:hidden z-[60] p-2 -mr-2 transition-colors duration-[800ms] ${isOpen ? 'text-background' : 'text-foreground'}`}
                         onClick={() => setIsOpen(!isOpen)}
                         aria-label="Toggle menu"
                     >
-                        <div className="w-6 h-5 relative flex flex-col justify-between">
-                            <span className={`w-full h-[1.5px] bg-current transition-all duration-300 origin-left ${isOpen ? 'rotate-45 translate-x-[2.5px] -translate-y-[1px]' : ''}`} />
-                            <span className={`w-full h-[1.5px] bg-current transition-all duration-300 ${isOpen ? 'opacity-0 translate-x-4' : ''}`} />
-                            <span className={`w-full h-[1.5px] bg-current transition-all duration-300 origin-left ${isOpen ? '-rotate-45 translate-x-[2.5px] translate-y-[1px]' : ''}`} />
+                        <div className="w-4 h-4 relative flex items-center justify-center">
+                            <span className={`absolute w-full h-[1.5px] bg-current transition-transform duration-[800ms] ease-[cubic-bezier(0.76,0,0.24,1)] ${isOpen ? 'rotate-90' : '-translate-y-[4px]'}`} />
+                            <span className={`absolute w-full h-[1.5px] bg-current transition-transform duration-[800ms] ease-[cubic-bezier(0.76,0,0.24,1)] ${isOpen ? 'rotate-0' : 'translate-y-[4px]'}`} />
                         </div>
                     </button>
                 </div>
