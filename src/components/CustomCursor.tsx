@@ -10,9 +10,11 @@ export function CustomCursor() {
     const mouseY = useRef(0)
     const pathname = usePathname()
     const [isMounted, setIsMounted] = useState(false)
+    const [isTouchDevice, setIsTouchDevice] = useState(false)
 
     useEffect(() => {
         setIsMounted(true)
+        setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0)
     }, [])
 
     useEffect(() => {
@@ -95,7 +97,7 @@ export function CustomCursor() {
         }
     }, [isMounted]) // We do NOT put pathname here, so it doesn't reset/re-run on navigation!
 
-    if (!isMounted || pathname?.startsWith('/admin')) return null
+    if (!isMounted || pathname?.startsWith('/admin') || isTouchDevice) return null
 
     return (
         <div
