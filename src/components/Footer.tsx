@@ -3,8 +3,9 @@ import { client } from '@/sanity/lib/client'
 export const revalidate = 60
 
 export async function Footer() {
-    const settings = await client.fetch(`*[_type == "siteSettings"][0]{ contactEmail }`)
+    const settings = await client.fetch(`*[_type == "siteSettings"][0]{ contactEmail, whatsappLink }`)
     const email = settings?.contactEmail || "yndplus@outlook.com"
+    const whatsappLink = settings?.whatsappLink
     const currentYear = new Date().getFullYear()
 
     return (
@@ -24,7 +25,12 @@ export async function Footer() {
                     <div className="flex flex-col gap-2">
                         <span className="text-foreground tracking-tight mb-1">Contact</span>
                         <a href={`mailto:${email}`} className="hover:text-foreground transition-colors">{email}</a>
-                        <a href="/contact" className="hover:text-foreground transition-colors">Start a project</a>
+                        {whatsappLink && (
+                            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+                                WhatsApp / Book
+                            </a>
+                        )}
+                        <a href="/contact" className="hover:text-foreground transition-colors mt-2">Start a project</a>
                     </div>
                     <div className="flex flex-col gap-2 justify-end">
                         <span className="font-mono text-xs">© {currentYear} YND+ Architecture. All rights reserved.</span>

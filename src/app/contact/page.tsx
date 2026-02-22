@@ -5,12 +5,12 @@ export const revalidate = 60
 export default async function ContactPage() {
     const settings = await client.fetch(`*[_type == "siteSettings"][0] {
     contactEmail,
-    whatsappNumber,
+    whatsappLink,
     calendlyLink
   }`)
 
     const email = settings?.contactEmail || "yndplus@outlook.com"
-    const whatsapp = settings?.whatsappNumber || "https://wa.me/"
+    const whatsapp = settings?.whatsappLink || "https://api.whatsapp.com/send?phone=201143909129"
     const calendly = settings?.calendlyLink || "https://calendly.com"
 
     return (

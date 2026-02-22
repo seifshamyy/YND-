@@ -74,9 +74,13 @@ export const siteSettingsSchema = {
             initialValue: 'yndplus@outlook.com',
         },
         {
-            name: 'whatsappNumber',
-            title: 'WhatsApp Number',
-            type: 'string',
+            name: 'whatsappLink',
+            title: 'WhatsApp / Booking Link',
+            description: 'Provide the full URL (e.g., https://api.whatsapp.com/send?phone=201143909129 or a Calendly link).',
+            type: 'url',
+            validation: (Rule: any) => Rule.uri({
+                scheme: ['http', 'https']
+            })
         },
         {
             name: 'calendlyLink',
